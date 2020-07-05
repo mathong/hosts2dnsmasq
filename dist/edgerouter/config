@@ -1,0 +1,44 @@
+# Sample config showing what to configure to block ads using dnsmasq, and update the block list on a daily basis
+
+system {
+    # Update block list and reload dnsmasq on a daily basis
+    task-scheduler {
+        task hosts2dnsmasq {
+            crontab-spec "0 3 * * *"
+            executable {
+                path /config/scripts/wrapper_hosts2dnsmasq.sh
+            }
+        }
+    }
+    # You can define local names (useful to avoid unnecessary round trips)
+    # Static hosts are added to /etc/hosts
+    static-host-mapping {
+        host-name <hostname> {
+            inet <x.x.x.x>
+        }
+    }
+}
+
+service {
+    # Advertise your router as a DNS server in DHCP offers
+    dhcp-server {
+        disabled false
+        hostfile-update disable
+        shared-network-name <name>> {
+            authoritative enable
+            subnet <CIDR> {
+                dns-server <router_ip>
+            }
+        }
+    }
+    # Forward DNS queries to your favorite provider
+    dns {
+        forwarding {
+            cache-size 1000
+            listen-on <interface> # most probably switch0 on ERX
+            name-server <x.x.x.x> # something like 1.1.1.1
+            name-server <x.x.x.x> # something like 1.0.0.1
+            # options log-queries # optional
+        }
+    }
+}

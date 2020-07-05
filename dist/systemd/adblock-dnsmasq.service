@@ -1,0 +1,8 @@
+[Unit]
+Description=Update dnsmasq configuration to block domains from blocklist
+After=network-online.target dnsmasq.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/hosts2dnsmasq -conf-path /etc/dnsmasq.d/block_adware_malware.conf
+ExecStartPost=/bin/systemctl reload dnsmasq.service
