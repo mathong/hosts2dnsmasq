@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	version               = "v1.0.0-rc.1"
+	version               = "v1.0.0-rc.2"
 	dnsmasqConfigFileMode = 0600
 	hostsGetTimeout       = 30 * time.Second
 )
