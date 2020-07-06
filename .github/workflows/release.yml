@@ -20,11 +20,14 @@ jobs:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
 
+    - name: Get golint
+      run: make golint
+
+    - name: Lint
+      run: make lint
+
     - name: Build
-      run: make build
-      
-    - name: Build mipsle
-      run: make build-mipsle
+      run: make build-cross
 
     - name: Test
       run: make test

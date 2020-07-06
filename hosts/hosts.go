@@ -4,13 +4,12 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"regexp"
 )
 
 const (
-	// DefaultURL point to the main hosts file provided by https://github.com/StevenBlack/hosts
+	// DefaultURL points to the main hosts file provided by https://github.com/StevenBlack/hosts
 	DefaultURL = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
 )
 
@@ -35,7 +34,6 @@ func Parse(r io.Reader) ([]string, error) {
 
 // Download downloads a remote hosts file and returns an io.Reader that can be passed to Parse()
 func Download(client Client, url string) (io.Reader, error) {
-	log.Printf("Downloading host file %s", url)
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return nil, err
